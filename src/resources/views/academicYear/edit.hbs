@@ -1,0 +1,16 @@
+<h2>Edit Academic Year</h2>
+<form action="../{{academicYear._id}}/update" method="POST">
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name" maxlength="255" value="{{academicYear.name}}"><br>
+    
+    <label for="startDate">Start Date:</label><br>
+    <input type="date" id="startDate" name="startDate" required value="{{formatDateForEdit academicYear.startDate}}"><br>
+    
+    <label for="closureDate">Closure Date:</label><br>
+    <input type="date" id="closureDate" name="closureDate" required value="{{formatDateForEdit academicYear.closureDate}}"><br>
+    
+    <label for="finalClosureDate">Final Closure Date:</label><br>
+    <input type="date" id="finalClosureDate" name="finalClosureDate" required value="{{formatDateForEdit academicYear.finalClosureDate}}"><br><br>
+    
+    <input type="submit" value="Update Academic Year">
+</form>

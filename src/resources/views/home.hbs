@@ -1,0 +1,22 @@
+<div class="mt-4">
+    <h1>DAY LA H1</h1>
+    <div class="row">
+        {{#each courses}}
+        <div class="col-sm-6 col-lg-4">
+            <div class="card card-course-item">
+                <a href="/courses/{{slug}}">
+                    <img class="card-img-top" src="{{image}}" alt="{{image}}">
+                </a>
+                <div class="card-body">
+                    <a href="/courses/{{slug}}">
+                        <h5 class="card-title">{{name}}</h5>
+                    </a>
+                    <p class="card-text">{{description}}</p>
+                    <a href="#" class="btn btn-primary">Buy this</a>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+
+    </div>
+</div>
