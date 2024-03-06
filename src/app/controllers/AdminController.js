@@ -14,7 +14,8 @@ class AdminController {
         const academicYear = new AcademicYear(req.body);
         console.log(academicYear);
         academicYear.save();
-        res.send('AcademicYear saved')
+        // res.send('AcademicYear saved')
+        res.redirect('./view')
 
     }
 

@@ -1,11 +1,25 @@
 const path = require('path');
+var createError = require('http-errors');
+
 const express = require('express');
 const morgan = require('morgan');
 const exphbs = require('express-handlebars');
 const helpers = require('./handlebarsHelpers');
+//store token
+var cookieParser = require('cookie-parser');
+const session = require('express-session');
 
 const app = express();
+app.use(session({
+    resave:true,
+    saveUninitialized:false,
+    secret: 'long_string_for_secret',
+    cookie:{maxAge: 300000}}))
+    
+app.use(cookieParser());
+
 const port = 3000;
+
 
 const route = require('./routes'); //./routes/index.js
 const db= require('./config/db')
@@ -42,6 +56,8 @@ app.engine(
 
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resources','views'));
+
+app.use(express.json());
 
 //Route init
 route(app);

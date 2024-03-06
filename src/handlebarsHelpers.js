@@ -3,7 +3,7 @@ const helpers = {
         return a === b;
     },
     formatDateForView: (date) => {
-        return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric'});
     },
     formatDateForEdit: function(dateString) {
         // Ensure dateString is provided and is a string
