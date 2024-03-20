@@ -1,35 +1,5 @@
 <div class="mt-4">
     <h1>Manage Academic Years abc</h1>
-
-    <!-- Form for adding/editing academic years -->
-    <form id="academicYearForm" action="./create" method="POST">
-        <input type="hidden" id="academicYearId" name="academicYearId">
-
-        <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" class="form-control" id="name" name="name" maxlength="255" required>
-        </div>
-
-        <div class="form-group">
-            <label for="startDate">Start Date:</label>
-            <input type="date" class="form-control" id="startDate" name="startDate" required>
-        </div>
-
-        <div class="form-group">
-            <label for="closureDate">Closure Date:</label>
-            <input type="date" class="form-control" id="closureDate" name="closureDate" required>
-        </div>
-
-        <div class="form-group">
-            <label for="finalClosureDate">Final Closure Date:</label>
-            <input type="date" class="form-control" id="finalClosureDate" name="finalClosureDate" required>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Save</button>
-    </form>
-
-    <hr>
-
     <!-- Table for viewing all academic years -->
     <div class="table-responsive">
         <table class="table">
@@ -60,5 +30,35 @@
             </tbody>
         </table>
     </div>
-</div>
 
+
+    <!-- Form for adding/editing academic years -->
+    <form class="w-50"id="academicYearForm" action="./create" method="POST">
+        <input type="hidden" id="academicYearId" name="academicYearId">
+
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" name="name" maxlength="255" required>
+        </div>
+
+        <div class="form-group">
+            <label for="startDate">Start Date:</label>
+            <input type="date" class="form-control" id="startDate" name="startDate" required>
+        </div>
+
+        <div class="form-group">
+            <label for="closureDate">Closure Date:</label>
+            <input type="date" class="form-control" id="closureDate" name="closureDate" required>
+        </div>
+
+        <div class="form-group">
+            <label for="finalClosureDate">Final Closure Date:</label>
+            <input type="date" class="form-control" id="finalClosureDate" name="finalClosureDate" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+
+    <hr>
+
+</div>

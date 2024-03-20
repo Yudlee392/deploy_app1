@@ -12,7 +12,7 @@ class AdminController {
         // console.log(req.params);
         // res.send(req.body);
         const academicYear = new AcademicYear(req.body);
-        console.log(academicYear);
+        console.log("ACADEMIC",academicYear);
         academicYear.save();
         // res.send('AcademicYear saved')
         res.redirect('./view')
@@ -24,7 +24,8 @@ class AdminController {
         AcademicYear.find({})
         .then(academicYears =>res.render('academicYear/view',{
             // activePage: 'home',
-            academicYears : mutipleMongooseToObjects(academicYears)
+            academicYears : mutipleMongooseToObjects(academicYears),
+            authen: true
         }))
         .catch(error => next(error))    }
 

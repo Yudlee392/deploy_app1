@@ -10,10 +10,11 @@ const secretKey = process.env.JWT_SECRET;
 
 
 class UserController {
-
     loginpage(req, res) {
-        console.log(req.session)
-
+        console.log("from login page",req.session)
+        const token=req.session.token;  
+        if (token) 
+            return res.redirect("/")
         res.render('login', { activePage: 'login' });
     }
 
@@ -23,7 +24,7 @@ class UserController {
             const { userName, passWord } = req.body;
             // Find user by username
             const user = await User.findOne({ userName }).populate('roleId');
-            console.log(user);
+            // console.log(user);
             // Check if user exists
             if (!user) {
                 return res.status(404).json({ message: 'User not found' });
@@ -47,7 +48,7 @@ class UserController {
 
             // localStorage.setItem('token', token);
             req.session.token = token;
-            console.log("from user controller",req.session)
+            console.log("from user controller", req.session)
             if (user.roleId.name === 'admin') {
                 res.redirect('/admin/academic/view');
             } else {

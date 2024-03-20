@@ -5,8 +5,8 @@ class SiteController {
     //[GET] /
     index(req, res, next) {
         var ss=req.session
-        req.session.role='khoa ko khon'
-        console.log(req.session)
+        // req.session.role='khoa ko khon'
+        // console.log(req.session)
 
         //  Course.find({},function(err,courses){
         //     if(!err) res.json(courses);

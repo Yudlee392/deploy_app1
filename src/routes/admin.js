@@ -11,6 +11,5 @@ router.get('/academic/:id/edit', adminController.edit);
 
 router.post('/academic/:id/update', adminController.update);
 
-// router.get('/', newsController.index);
 
 module.exports = router;
