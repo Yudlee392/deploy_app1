@@ -1,64 +1,93 @@
-<div class="mt-4">
-    <h1>Manage Academic Years abc</h1>
-    <!-- Table for viewing all academic years -->
-    <div class="table-responsive">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Start Date</th>
-                    <th>Closure Date</th>
-                    <th>Final Closure Date</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{#each academicYears}}
-                <tr>
-                    <td>{{this.name}}</td>
-                    <td>{{formatDateForView this.startDate}}</td>
-                    <td>{{formatDateForView this.closureDate}}</td>
-                    <td>{{formatDateForView this.finalClosureDate}}</td>
-                    <td>
-                        <a href="./{{this._id}}/edit" class="btn btn-sm btn-primary">Edit</a>
-                        <form action="./{{this._id}}/delete" method="POST" style="display: inline;">
-                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-                {{/each}}
-            </tbody>
-        </table>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Academic Years</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        .form-container {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Manage Academic Years</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Table for viewing all academic years -->
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Name</th>
+                            <th>Start Date</th>
+                            <th>Closure Date</th>
+                            <th>Final Closure Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each academicYears}}
+                        <tr>
+                            <td>{{this.name}}</td>
+                            <td>{{formatDateForView this.startDate}}</td>
+                            <td>{{formatDateForView this.closureDate}}</td>
+                            <td>{{formatDateForView this.finalClosureDate}}</td>
+                            <td>
+                                <a href="./{{this._id}}/edit" class="btn btn-sm btn-primary mr-2">Edit</a>
+                                <form action="./{{this._id}}/delete" method="POST" style="display: inline;">
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-
-
-    <!-- Form for adding/editing academic years -->
-    <form class="w-50"id="academicYearForm" action="./create" method="POST">
-        <input type="hidden" id="academicYearId" name="academicYearId">
-
-        <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" class="form-control" id="name" name="name" maxlength="255" required>
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <!-- Form for adding/editing academic years -->
+            <div class="form-container">
+                <form id="academicYearForm" action="./create" method="POST">
+                    <h3 class="mb-3">Add Academic Year</h3>
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" class="form-control" id="name" name="name" maxlength="255" required>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="startDate">Start Date:</label>
+                        <input type="date" class="form-control" id="startDate" name="startDate" required>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="closureDate">Closure Date:</label>
+                        <input type="date" class="form-control" id="closureDate" name="closureDate" required>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="finalClosureDate">Final Closure Date:</label>
+                        <input type="date" class="form-control" id="finalClosureDate" name="finalClosureDate" required>
+                    </div>
+    
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </form>
+            </div>
         </div>
-
-        <div class="form-group">
-            <label for="startDate">Start Date:</label>
-            <input type="date" class="form-control" id="startDate" name="startDate" required>
-        </div>
-
-        <div class="form-group">
-            <label for="closureDate">Closure Date:</label>
-            <input type="date" class="form-control" id="closureDate" name="closureDate" required>
-        </div>
-
-        <div class="form-group">
-            <label for="finalClosureDate">Final Closure Date:</label>
-            <input type="date" class="form-control" id="finalClosureDate" name="finalClosureDate" required>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Add</button>
-    </form>
-
-    <hr>
-
+    </div>
 </div>
+
+</body>
+</html>
