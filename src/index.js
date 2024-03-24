@@ -62,6 +62,8 @@ app.use(express.json());
 //Route init
 route(app);
 
+const submissionRoute = require('./routes/submissionRoutes');
+app.use(submissionRoute);
 app.listen(port, () => {
         console.log(`App listening on port ${port}`);
 });

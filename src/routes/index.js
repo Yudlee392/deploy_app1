@@ -1,6 +1,7 @@
 const siteRouter = require('./site');
 const adminRouter = require('./admin');
 const loginRouter = require('./login');
+const submissionRouter = require('./submissionRoutes');
 // Middleware
 const authMiddleware = require("../middlewares/authMiddleware");
 
@@ -12,7 +13,9 @@ function route(app) {
     app.use('/login',loginRouter);
 
     app.use('/', siteRouter);
- 
+
+    app.use('/submission', submissionRouter);
+
     app.get('/logout', (req, res) => {
         // Destroy the current session
         req.session.destroy(err => {
