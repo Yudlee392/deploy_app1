@@ -20,7 +20,6 @@ app.use(cookieParser());
 
 const port = 3000;
 
-
 const route = require('./routes'); //./routes/index.js
 const db= require('./config/db')
 
