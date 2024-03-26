@@ -1,4 +1,4 @@
-const { mutipleMongooseToObjects } = require("../../util/mongoose");
+const { mutipleMongooseToObjects, mongoseToObject } = require("../../util/mongoose");
 const Faculty = require("../models/Faculty");
 
 
@@ -40,16 +40,14 @@ class FacultyController {
     }
 
     //[GET] /admin/faculties/:id/edit
-    async editFaculty(req, res, next) {
-        try {
-            const faculty = await Faculty.findById(req.params.id);
-            res.render('faculty/edit', {
-                faculty: mutipleMongooseToObjects(faculty)
-            });
-        } catch (error) {
-            next(error);
-        }
+    editFaculty(req, res, next) {
+        Faculty.findById(req.params.id)
+            .then(faculty => res.render('faculty/edit', {
+                faculty: mongoseToObject(faculty)
+            }))
+            .catch(error => next(error));
     }
+    
     
     //[POST] /admin/faculties/:id/update
     async updateFaculty(req, res, next) {
