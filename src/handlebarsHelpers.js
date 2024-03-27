@@ -27,12 +27,11 @@ const helpers = {
         // Return the formatted date in yyyy-mm-dd format
         return `${year}-${month}-${day}`;
     },
-    check: function(v1, v2) {
+    ifCond: function(v1, v2, options) {
         if (v1 === v2) {
-            console.log('ifcond',v1)
-            return "selected"
+            return options.fn(this);
         }
-        return "";
+        return options.inverse(this);
     }
     
 

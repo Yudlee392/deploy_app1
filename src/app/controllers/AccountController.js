@@ -17,7 +17,6 @@ class AccountController {
         } catch (error) {
             next(error);
         }
-
     }
 
     //[POST] /admin/account/create
@@ -43,17 +42,17 @@ class AccountController {
         }
     }
 
-    //[POST] /admin/faculties/:id/delete
+    //[POST] /admin/account/:id/delete
     async deleteAccount(req, res, next) {
         try {
-            await Account.deleteOne({ _id: req.params.id });
+            await User.deleteOne({ _id: req.params.id });
             res.redirect('../view');
         } catch (error) {
             next(error);
         }
     }
 
-    //[GET] /admin/faculties/:id/edit
+    //[GET] /admin/account/:id/edit
     async editAccount(req, res, next) {
 
         const roles = await Role.find();
@@ -69,16 +68,32 @@ class AccountController {
     }
 
 
-    //[POST] /admin/faculties/:id/update
+    //[POST] /admin/account/:id/update
     async updateAccount(req, res, next) {
         try {
-            const { name, description } = req.body;
-            await Account.updateOne({ _id: req.params.id }, { name, description });
+            const { userName, password, email, fullName, roleId, facultyId } = req.body;
+            const accountId = req.params.id;
+    
+            // Assuming 'Account' is your model for user accounts
+            const updatedAccount = await User.findByIdAndUpdate(accountId, {
+                userName,
+                password, 
+                email,
+                fullName,
+                roleId,
+                facultyId
+            }, { new: true }); // To return the updated document
+    
+            if (!updatedAccount) {
+                return res.status(404).json({ error: 'Account not found' });
+            }
+    
             res.redirect('../view');
         } catch (error) {
-            next(error);
+            next(error); 
         }
     }
+    
 
 
 }
