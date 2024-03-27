@@ -21,7 +21,7 @@ class UserController {
 
     async login(req, res) {
         try {
-            const { userName, passWord } = req.body;
+            const { userName, password } = req.body;
             // Find user by username
             const user = await User.findOne({ userName }).populate('roleId');
             // console.log(user);
@@ -31,7 +31,7 @@ class UserController {
             }
 
             // Validate password
-            const isPasswordValid = await bcrypt.compare(passWord, user.passWord);
+            const isPasswordValid = await bcrypt.compare(password, user.password);
             if (!isPasswordValid) {
                 return res.status(401).json({ message: 'Invalid password' });
             }
