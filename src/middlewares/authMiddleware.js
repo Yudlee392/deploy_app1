@@ -24,14 +24,34 @@ async function authMiddleware(req, res, next) {
         // Check user's role
         const role = user.roleId.name; // Assuming roleId contains the role name
 
-        // Check if the user's role is allowed
-        if (role == 'student' || role == 'manager' || role == 'admin' || role == 'coordinator') {
-            // Set user role in request for further processing
-            req.role = role;
-            next();
-        } else {
-            return res.status(403).json({ message: "Unauthorized role" });
+        if (role === 'student') {
+            // If the user is a student, prevent access to certain routes
+            return res.status(403).json({ message: "Access forbidden for students" });
+        } else if (role === 'manager') {
+            // If the user is a manager, allow access to certain routes
+            if (req.originalUrl.startsWith('/manager')) {
+                req.role = role;
+                return next(); // Allow access
+            } else {
+                return res.status(403).json({ message: "Access forbidden" });
+            }
+        } else if (role === 'coordinator') {
+            // If the user is a coordinator, allow access to certain routes
+            if (req.originalUrl.startsWith('/coordinator')) {
+                req.role = role;
+                return next(); // Allow access
+            } else {
+                return res.status(403).json({ message: "Access forbidden" });
+            }
         }
+
+        // Allow access for users with the role "admin" to all routes
+        if (role === 'admin') {
+            req.role = role;
+            return next(); // Allow access
+        }
+
+        
     } catch (err) {
         return res.status(403).json({ message: "Invalid token ", token: token, error: err });
     }

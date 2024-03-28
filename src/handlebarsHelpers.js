@@ -3,7 +3,7 @@ const helpers = {
         return a === b;
     },
     formatDateForView: (date) => {
-        return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric'});
+        return date.toLocaleDateString('vi-VN', { year: 'numeric', month: 'numeric', day: 'numeric'});
     },
     formatDateForEdit: function(dateString) {
         // Ensure dateString is provided and is a string
@@ -26,7 +26,14 @@ const helpers = {
         
         // Return the formatted date in yyyy-mm-dd format
         return `${year}-${month}-${day}`;
+    },
+    ifCond: function(v1, v2, options) {
+        if (v1 === v2) {
+            return options.fn(this);
+        }
+        return options.inverse(this);
     }
+    
 
 };
 module.exports = helpers;

@@ -1,6 +1,6 @@
 
 <div class="container mt-4">
-    <h1 class="text-center mb-4">Manage Academic Years</h1>
+    <h1 class="text-center mb-4">Manage Faculty</h1>
     <div class="row">
         <div class="col-md-12">
             <!-- Table for viewing all academic years -->
@@ -9,19 +9,15 @@
                     <thead class="thead-dark">
                         <tr>
                             <th>Name</th>
-                            <th>Start Date</th>
-                            <th>Closure Date</th>
-                            <th>Final Closure Date</th>
+                            <th>Description</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{#each academicYears}}
+                        {{#each faculties}}
                         <tr>
                             <td>{{this.name}}</td>
-                            <td>{{formatDateForView this.startDate}}</td>
-                            <td>{{formatDateForView this.closureDate}}</td>
-                            <td>{{formatDateForView this.finalClosureDate}}</td>
+                            <td>{{this.description}}</td>
                             <td>
                                 <a href="./{{this._id}}/edit" class="btn btn-sm btn-primary mr-2">Edit</a>
                                 <form action="./{{this._id}}/delete" method="POST" style="display: inline;">
@@ -37,28 +33,18 @@
     </div>
     <div class="row mt-4">
         <div class="col-md-12">
-            <!-- Form for adding/editing academic years -->
+            <!-- Form for adding faculty -->
             <div class="form-container">
-                <form id="academicYearForm" action="./create" method="POST">
-                    <h3 class="mb-3">Add Academic Year</h3>
+                <form id="facultyForm" action="/admin/faculty/create" method="POST">
+                    <h3 class="mb-3">Add Faculty</h3>
                     <div class="form-group">
                         <label for="name">Name:</label>
                         <input type="text" class="form-control" id="name" name="name" maxlength="255" required>
                     </div>
     
                     <div class="form-group">
-                        <label for="startDate">Start Date:</label>
-                        <input type="date" class="form-control" id="startDate" name="startDate" required>
-                    </div>
-    
-                    <div class="form-group">
-                        <label for="closureDate">Closure Date:</label>
-                        <input type="date" class="form-control" id="closureDate" name="closureDate" required>
-                    </div>
-    
-                    <div class="form-group">
-                        <label for="finalClosureDate">Final Closure Date:</label>
-                        <input type="date" class="form-control" id="finalClosureDate" name="finalClosureDate" required>
+                        <label for="description">Description:</label>
+                        <textarea class="form-control" id="description" name="description" rows="2" required></textarea>
                     </div>
     
                     <div class="text-center">
@@ -69,3 +55,4 @@
         </div>
     </div>
 </div>
+
