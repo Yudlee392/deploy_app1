@@ -27,7 +27,8 @@ class AdminController {
             academicYears : mutipleMongooseToObjects(academicYears),
             authen: true
         }))
-        .catch(error => next(error))    }
+        .catch(error => next(error))    
+    }
 
 
     //[POST] /:id/delete
@@ -51,4 +52,5 @@ class AdminController {
             .catch(error => next(error))
     }
 }
+
 module.exports = new AdminController();

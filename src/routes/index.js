@@ -4,12 +4,16 @@ const loginRouter = require('./login');
 const submissionRouter = require('./submissionRoutes');
 // Middleware
 const authMiddleware = require("../middlewares/authMiddleware");
+const facultyRouter = require('./faculty');
+const accountRouter = require('./account');
 
 
 function route(app) {
 
     app.use('/admin',authMiddleware, adminRouter);
-
+    app.use('/admin',authMiddleware,facultyRouter);
+    app.use('/admin',authMiddleware,accountRouter);
+    
     app.use('/login',loginRouter);
 
     app.use('/', siteRouter);
