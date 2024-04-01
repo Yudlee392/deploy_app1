@@ -2,7 +2,7 @@ const { mutipleMongooseToObjects, mongoseToObject } = require("../../util/mongoo
 const Faculty = require("../models/Faculty");
 const Role = require("../models/Role");
 const User = require("../models/User");
-
+const bcrypt = require("bcrypt");
 
 class AccountController {
     async createAccountForm(req, res) {
@@ -23,10 +23,12 @@ class AccountController {
     async createAccount(req, res, next) {
 
         const { userName, password, roleId, email, fullName, facultyId } = req.body;
-        const newAccount = new User({ userName, password, roleId, fullName, facultyId, email });
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const newAccount = new User({ userName, password: hashedPassword, roleId, fullName, facultyId, email });
         // console.log('aaaa',newAccount)
         newAccount.save();
-        res.redirect('/');
+        res.redirect('./view');
     }
 
     //[GET] /admin/account/view
@@ -76,18 +78,24 @@ class AccountController {
     async updateAccount(req, res, next) {
         try {
             const { userName, password, email, fullName, roleId, facultyId } = req.body;
+            const hashedPassword = await bcrypt.hash(password, 10);
             const accountId = req.params.id;
     
             // Assuming 'Account' is your model for user accounts
-            const updatedAccount = await User.findByIdAndUpdate(accountId, {
+            const updateObject = {
                 userName,
-                password, 
+                password:hashedPassword, 
                 email,
                 fullName,
-                roleId,
-                facultyId
-            }, { new: true }); // To return the updated document
-    
+                roleId
+            };
+            
+            if (facultyId !== "") {
+                updateObject.facultyId = facultyId;
+            }
+            
+            const updatedAccount = await User.findByIdAndUpdate(accountId, updateObject, { new: true });
+            
             if (!updatedAccount) {
                 return res.status(404).json({ error: 'Account not found' });
             }
