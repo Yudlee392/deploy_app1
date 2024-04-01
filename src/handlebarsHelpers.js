@@ -27,11 +27,15 @@ const helpers = {
         // Return the formatted date in yyyy-mm-dd format
         return `${year}-${month}-${day}`;
     },
-    ifCond: function(v1, v2, options) {
-        if (v1 === v2) {
-            return options.fn(this);
+    ifEquals: function(arg1, arg2, options) {
+        // console.log('arg1',arg1,'arg2',arg2,arg1 == arg2 )
+        try{
+            if(arg1.toString() == arg2.toString()){
+                return options.fn(this);                    }
         }
-        return options.inverse(this);
+        catch{
+            return options.inverse(this);
+        }
     }
     
 

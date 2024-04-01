@@ -1,36 +1,91 @@
 <div class="container mt-4">
     <h1 class="text-center mb-4">Manage Account</h1>
-    <div class="col-md-12">
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Full Name</th>
-                        <th>Role</th>
-                        <th>Faculty</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{#each users}}
-                    <tr>
-                        <td>{{this.userName}}</td>
-                        <td>{{this.email}}</td>
-                        <td>{{this.fullName}}</td>
-                        <td>{{this.roleId.name}}</td>
-                        <td>{{this.facultyId.name}}</td>
-                        <td>
-                            <a href="./{{this._id}}/edit" class="btn btn-sm btn-primary mr-2">Edit</a>
-                            <form action="./{{this._id}}/delete" method="POST" style="display: inline;">
-                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                    {{/each}}
-                </tbody>
-            </table>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Table for viewing all accounts -->
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Full Name</th>
+                            <th>Role</th>
+                            <th>Faculty</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each users}}
+                        <tr>
+                            <td>{{this.userName}}</td>
+                            <td>{{this.email}}</td>
+                            <td>{{this.fullName}}</td>
+                            <td>{{this.roleId.name}}</td>
+                            <td>{{this.facultyId.name}}</td>
+                            <td>
+                                <a href="./{{this._id}}/edit" class="btn btn-sm btn-primary mr-2">Edit</a>
+                                <form action="./{{this._id}}/delete" method="POST" style="display: inline;">
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="text-center mb-4">Create Account</h3>
+                    <form action="/admin/account/create" method="POST">
+                        <div class="form-group">
+                            <label for="userName">Username:</label>
+                            <input type="text" class="form-control" id="userName" name="userName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fullName">Full Name:</label>
+                            <input type="text" class="form-control" id="fullName" name="fullName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="role">Role:</label>
+                            <select id="role" name="roleId" class="form-control" required>
+                                {{#each roles}}
+                                <option value="{{this._id}}">{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="facultyId">Faculty:</label>
+                            <select id="facultyId" name="facultyId" class="form-control">
+                                {{#each faculties }}
+                                <option value="{{this._id}}">{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Create Account</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>

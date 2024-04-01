@@ -32,10 +32,14 @@ class AccountController {
     //[GET] /admin/account/view
     async viewUsers(req, res, next) {
         try {
+            const roles = await Role.find();
+            const faculties = await Faculty.find();
             const users = await User.find({}).populate('roleId').populate('facultyId');
             res.render('account/view', {
                 users: mutipleMongooseToObjects(users),
-                authen: true
+                authen: true,
+                roles: mutipleMongooseToObjects(roles),
+                faculties: mutipleMongooseToObjects(faculties),
             });
         } catch (error) {
             next(error);
