@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
     roleId: { type: mongoose.Schema.Types.ObjectId, ref: 'Role', required: true },
-    facultyId: { type: mongoose.Schema.Types.ObjectId, ref: 'Faculty' },
+    facilityId: { type: mongoose.Schema.Types.ObjectId, ref: 'Facility' },
     userName: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    passWord: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     fullName: { type: String, required: true }
   });
