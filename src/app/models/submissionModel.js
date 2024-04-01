@@ -1,31 +1,24 @@
 const mongoose = require('mongoose');
 
 const submissionSchema = new mongoose.Schema({
-    submissionStatus: {
+    name: {
         type: String,
-        required: false
+        required: true
     },
-    dueDate: {
+    description: {
         type: String,
-        required: false
+        required: true
     },
-    timeRemaining: {
-        type: String,
-        required: false
+    image: {
+        type: String, 
+        required: true
     },
-    lastModified: {
+    word: {
         type: String,
-        required: false
-    },
-    fileSubmission: {
-        type: String,
-        required: false
-    },
-    submissionComments: {
-        type: String,
-        required: false
+        required: true
     }
 });
+
 
 const Submission = mongoose.model('Submission', submissionSchema);
 

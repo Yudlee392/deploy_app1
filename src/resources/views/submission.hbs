@@ -1,221 +1,73 @@
+<!-- submission.hbs -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COMP1640 Form</title>
+    <title>Submission Form</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            text-align: left;
-        }
-        .divider {
-            border-top: 1px solid #000;
-            margin-bottom: 20px;
-        }
         .form-container {
-            max-width: 600px;
-            margin: 20px auto;
+            max-width: 500px;
+            margin: auto;
             padding: 20px;
+            border: 1px solid #ccc;
             border-radius: 5px;
-            background-color: #fff;
-            box-shadow: none;
-            text-align: center; 
+            background-color: #f9f9f9;
         }
         .form-group {
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            margin-bottom: 15px;
         }
         .form-group label {
-            font-weight: bold;
-            flex: 1;
-            margin-right: 10px;
-            white-space: nowrap;
-            font-size: 14px;
+            display: block;
+            margin-bottom: 5px;
         }
         .form-group input[type="text"],
-        .form-group textarea {
-            flex: 2;
+        .form-group textarea,
+        .form-group input[type="file"] {
+            width: 100%;
             padding: 8px;
-            border: none;
+            border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
-            width: 100%;
-            background-color: #f0f0f0;
         }
-        .form-group textarea {
-            resize: vertical;
-        }
-        .form-group button[type="button"],
-        .form-group button[type="submit"] {
-            background-color: #3538e3;
+        .form-group input[type="submit"] {
+            background-color: #4CAF50;
             color: white;
-            padding: 8px 16px;
+            padding: 10px 20px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            width: 45%; 
-            max-width: 150px; 
-            font-size: 14px; 
         }
-        .form-group button[type="button"]:hover,
-        .form-group button[type="submit"]:hover {
-            background-color: #2c2fbb;
-        }
-        .import-container {
-            display: none;
-            border: 2px dashed #ccc;
-            border-radius: 5px;
-            padding: 20px;
-            text-align: center;
-            margin-top: 20px;
-            cursor: pointer; 
-        }
-        .import-container:hover {
-            background-color: #f0f0f0;
-        }
-        .import-text {
-            font-size: 16px;
-            color: #666;
-        }
-        .hidden {
-            display: none;
-        }
-        .edit-remove-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-        .edit-remove-buttons button {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .edit-remove-buttons button:first-child {
-            margin-right: 5px;
-        }
-        .edit-remove-buttons button:last-child {
-            margin-left: 5px;
+        .form-group input[type="submit"]:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
-    <h2 style="text-align: left;">COMP1640</h2>
-    <div class="divider"></div> 
     <div class="form-container">
-        <form id="submissionForm" action="/submission" method="post" enctype="multipart/form-data">
+        <h2>Submission Form</h2>
+        <form action="/submission" method="post" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="submissionStatus">Submission Status:</label>
-                <input type="text" id="submissionStatus" name="submissionStatus">
-            </div>
-            <div class="form-group">
-                <label for="dueDate">Due Date:</label>
-                <input type="text" id="dueDate" name="dueDate">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
             </div>
             <div class="form-group">
-                <label for="timeRemaining">Time Remaining:</label>
-                <input type="text" id="timeRemaining" name="timeRemaining">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" required></textarea>
             </div>
             <div class="form-group">
-                <label for="lastModified">Last Modified:</label>
-                <input type="text" id="lastModified" name="lastModified">
+                <label for="image">Image:</label>
+                <input type="file" id="image" name="image" accept="image/*" required>
             </div>
             <div class="form-group">
-                <label for="fileSubmission">File Submission:</label>
-                <input type="text" id="fileSubmission" name="fileSubmission">
+                <label for="word">File Word:</label> 
+                <input type="file" id="word" name="word" accept=".doc,.docx" required> 
             </div>
-            <div class="form-group" style="clear:both;">
-                <label for="submissionComments" style="margin-bottom: 10px;">Submission Comments:</label>
-                <textarea id="submissionComments" name="submissionComments" rows="4" style="width: 100%;"></textarea>
-            </div>
-            <div class="divider"></div> 
-            <div class="form-group" style="justify-content: center;"> 
-                <button type="button" id="addSubmissionBtn">Add Submission</button>
-            </div>
-            <div class="import-container" id="importContainer">
-                <div class="import-text">Import files here</div>
-                <input type="file" id="fileImport" multiple style="display: none;">
-            </div>
-            <div class="form-group agree-checkbox" id="agreeCheckboxContainer" style="display: none;">
-                <input type="checkbox" id="agreeCheckbox">
-                <label for="agreeCheckbox">I agree to terms and conditions</label>
-            </div>
-            <div class="form-group" id="submitBtnContainer" style="display: none;">
-                <button type="submit" class="submit-btn">Submit</button>
-            </div>
-            <div class="edit-remove-buttons" id="editRemoveBtns" style="display: none;">
-                <button type="button" id="editSubmissionBtn">Edit Submission</button>
-                <button type="button" id="removeSubmissionBtn">Remove Submission</button>
+            <div class="form-group">
+                <input type="submit" value="Submit">
             </div>
         </form>
     </div>
-
-    <script>
-        document.getElementById('addSubmissionBtn').addEventListener('click', function() {
-            var importContainer = document.getElementById('importContainer');
-            var agreeCheckboxContainer = document.getElementById('agreeCheckboxContainer');
-            var submitBtnContainer = document.getElementById('submitBtnContainer');
-            var editRemoveBtns = document.getElementById('editRemoveBtns');
-            
-            if (importContainer.style.display === 'none') {
-                importContainer.style.display = 'block';
-                agreeCheckboxContainer.style.display = 'block';
-                submitBtnContainer.style.display = 'block';
-            } else {
-                importContainer.style.display = 'none';
-                agreeCheckboxContainer.style.display = 'none';
-                submitBtnContainer.style.display = 'none';
-            }
-        });
-
-        document.getElementById('importContainer').addEventListener('click', function() {
-            document.getElementById('fileImport').click();
-        });
-
-        document.getElementById('fileImport').addEventListener('change', function() {
-            const fileInput = document.getElementById('fileImport');
-            const fileDropArea = document.getElementById('importContainer');
-            const files = fileInput.files;
-            if (files.length > 0) {
-                let fileNames = '';
-                for (let i = 0; i < files.length; i++) {
-                    fileNames += files[i].name + ', ';
-                }
-                fileNames = fileNames.substring(0, fileNames.length - 2);
-                fileDropArea.querySelector('.import-text').innerText = fileNames;
-            } else {
-                fileDropArea.querySelector('.import-text').innerText = 'Import files here';
-            }
-        });
-
-        document.getElementById('submissionForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            var importContainer = document.getElementById('importContainer');
-            var agreeCheckboxContainer = document.getElementById('agreeCheckboxContainer');
-            var submitBtnContainer = document.getElementById('submitBtnContainer');
-            var editRemoveBtns = document.getElementById('editRemoveBtns');
-
-            importContainer.style.display = 'none';
-            agreeCheckboxContainer.style.display = 'none';
-            submitBtnContainer.style.display = 'none';
-            editRemoveBtns.style.display = 'flex';
-        });
-
-
-        document.getElementById('editSubmissionBtn').addEventListener('click', function() {
-            alert('Edit Submission');
-        });
-
-        document.getElementById('removeSubmissionBtn').addEventListener('click', function() {
-            alert('Remove Submission');
-        });
-    </script>
 </body>
 </html>
-
