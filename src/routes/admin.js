@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const adminController = require('../app/controllers/AdminController');
+const academicYearController = require ('../app/controllers/AcademicYearController');
 
-router.get('/academic/create', adminController.createForm);
-router.post('/academic/create', adminController.create);
-router.get('/academic/view', adminController.view);
-router.post('/academic/:id/delete', adminController.delete);
+router.get('/academic/create', academicYearController.createForm);
+router.post('/academic/create', academicYearController.create);
+router.get('/academic/view', academicYearController.view);
+router.post('/academic/:id/delete', academicYearController.delete);
 
-router.get('/academic/:id/edit', adminController.edit);
+router.get('/academic/:id/edit', academicYearController.edit);
 
-router.post('/academic/:id/update', adminController.update);
+router.post('/academic/:id/update', academicYearController.update);
 
 
 module.exports = router;

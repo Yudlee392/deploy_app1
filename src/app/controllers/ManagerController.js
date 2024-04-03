@@ -10,7 +10,8 @@ class MagazineController {
             const faculties = await Faculty.find({});
             res.render('magazine/create', 
             {
-                authen: true,
+                authen: 'manager',
+                activePage: 'magazine',
                 academicYears: mutipleMongooseToObjects(academicYears),
                 faculties: mutipleMongooseToObjects(faculties)
             }
@@ -42,7 +43,8 @@ class MagazineController {
             const magazines = await Magazine.find({}).populate('faculty').populate('academicYear').sort({ academicYear: 1, faculty: 1 });
             res.render('magazine/view', {
                 magazines: mutipleMongooseToObjects(magazines),
-                authen: true,
+                authen: 'manager',
+                activePage: 'magazine',
                 academicYears: mutipleMongooseToObjects(academicYears),
                 faculties: mutipleMongooseToObjects(faculties)
             });

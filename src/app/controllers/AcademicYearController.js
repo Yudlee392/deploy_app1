@@ -1,7 +1,7 @@
 const AcademicYear = require("../models/AcademicYear");
 const {mutipleMongooseToObjects,mongoseToObject}= require('../../util/mongoose')
 
-class AdminController {
+class AcademicYearController {
     
     //[GET] /createAcademicYear
     createForm(req, res) {
@@ -25,7 +25,8 @@ class AdminController {
         .then(academicYears =>res.render('academicYear/view',{
             // activePage: 'home',
             academicYears : mutipleMongooseToObjects(academicYears),
-            authen: true
+            authen: 'admin',
+            activePage: 'academic'
         }))
         .catch(error => next(error))    
     }
@@ -53,4 +54,4 @@ class AdminController {
     }
 }
 
-module.exports = new AdminController();
+module.exports = new AcademicYearController();

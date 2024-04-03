@@ -6,20 +6,39 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item{{#if (eq activePage 'home')}} active{{/if}}">
+      {{!-- <li class="nav-item{{#if (eq activePage 'home')}} active{{/if}}">
         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-      </li>
-      {{#if authen}}
-      <li class="nav-item">
+      </li> --}}
+
+      {{!-- for Admin --}}
+      {{#if (eq authen 'admin')}}
+      <li class="nav-item {{#if (eq activePage 'academic')}} active{{/if}}">
         <a class="nav-link" href="/admin/academic/view">Manage Academic</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item {{#if (eq activePage 'faculty')}} active{{/if}}">
         <a class="nav-link" href="/admin/faculty/view">Manage Faculty</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item {{#if (eq activePage 'account')}} active{{/if}}">
         <a class="nav-link" href="/admin/account/view">Manage Account</a>
       </li>
       {{/if}}
+
+      {{!-- for Student --}}
+      {{#if (eq authen 'student')}}
+      <li class="nav-item {{#if (eq activePage 'submission')}} active{{/if}}">
+        <a class="nav-link" href="/student/submission/create">Create New Submission</a>
+      </li>
+      <li class="nav-item {{#if (eq activePage 'viewsubmission')}} active{{/if}}">
+        <a class="nav-link" href="/student/submission/view">View All Submission</a>
+      {{/if}}
+
+      {{!-- for Manager --}}
+      {{#if (eq authen 'manager')}}
+      <li class="nav-item {{#if (eq activePage 'magazine')}} active{{/if}}">
+        <a class="nav-link" href="/manager/academic/view">Manage Magazine</a>
+      </li>
+      {{/if}}
+
     </ul>
     <form class="form-inline my-2 my-lg-0 d-flex">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

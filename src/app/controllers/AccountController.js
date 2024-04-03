@@ -12,7 +12,8 @@ class AccountController {
             res.render('account/create', {
                 roles: mutipleMongooseToObjects(roles),
                 faculties: mutipleMongooseToObjects(faculties),
-                authen: true
+                authen: 'admin',
+                activePage: 'account'
             });
         } catch (error) {
             next(error);
@@ -39,7 +40,8 @@ class AccountController {
             const users = await User.find({}).populate('roleId').populate('facultyId');
             res.render('account/view', {
                 users: mutipleMongooseToObjects(users),
-                authen: true,
+                authen: 'admin',
+                activePage: 'account',
                 roles: mutipleMongooseToObjects(roles),
                 faculties: mutipleMongooseToObjects(faculties),
             });

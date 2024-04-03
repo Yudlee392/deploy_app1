@@ -4,9 +4,6 @@ const MagazineSchema = new mongoose.Schema({
   academicYear: { type: mongoose.Schema.Types.ObjectId, ref: 'AcademicYear', required: true },
   faculty: { type: mongoose.Schema.Types.ObjectId, ref: 'Faculty', required: true },
   createdAt: { type: Date, default: Date.now },
-  
-  filePath: { type: String, required: true },
-  imagePath: { type: String, required: true },
 });
 
 module.exports = mongoose.model('Magazine', MagazineSchema);

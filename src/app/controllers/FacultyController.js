@@ -22,7 +22,8 @@ class FacultyController {
             const faculties = await Faculty.find({});
             res.render('faculty/view', {
                 faculties: mutipleMongooseToObjects(faculties),
-                authen: true
+                authen: 'admin',
+                activePage: 'faculty'
             });
         } catch (error) {
             next(error);
