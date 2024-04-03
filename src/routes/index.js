@@ -1,12 +1,12 @@
 const siteRouter = require('./site');
 const adminRouter = require('./admin');
 const loginRouter = require('./login');
-const submissionRouter = require('./submissionRoutes');
 // Middleware
 const authMiddleware = require("../middlewares/authMiddleware");
 const facultyRouter = require('./faculty');
 const accountRouter = require('./account');
-
+const studentRouter = require('./student');
+const managerRouter = require('./manager');
 
 function route(app) {
 
@@ -14,11 +14,15 @@ function route(app) {
     app.use('/admin',authMiddleware,facultyRouter);
     app.use('/admin',authMiddleware,accountRouter);
     
+
+    //for student
+    app.use('/student',authMiddleware,studentRouter);
+
+    app.use('/manager',authMiddleware,managerRouter);
+
     app.use('/login',loginRouter);
 
     app.use('/', siteRouter);
-
-    app.use('/submission', submissionRouter);
 
     app.get('/logout', (req, res) => {
         // Destroy the current session
