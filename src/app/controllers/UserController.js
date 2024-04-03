@@ -51,7 +51,12 @@ class UserController {
             console.log("from user controller", req.session)
             if (user.roleId.name === 'admin') {
                 res.redirect('/admin/academic/view');
-            } else {
+            } else if (user.roleId.name === 'manager') {
+                res.redirect('/manager/magazine/view');
+            }  else if (user.roleId.name === 'student') {
+                res.redirect('/student/submission/create');
+            }  
+            else {
                 res.redirect('/');
             }
             // Send token as response

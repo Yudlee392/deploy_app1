@@ -1,9 +1,5 @@
 const mongoose = require('mongoose');
-
-const Schema = mongoose.Schema;
-const ObjectId = Schema.ObjectId;
-
-const Course = new Schema({
+const Course = new mongoose.Schema({
   name: {type:String, maxLength:255},
   description: {type:String, maxlength:600},
   image: {type:String, maxlength:255},
@@ -11,4 +7,3 @@ const Course = new Schema({
   updateAt: {type:Date, default:Date.now},
 });
 module.exports=mongoose.model('Course', Course);
-

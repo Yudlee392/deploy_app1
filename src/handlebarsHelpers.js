@@ -36,6 +36,10 @@ const helpers = {
         catch{
             return options.inverse(this);
         }
+    },
+    isBeforeFinalClosureDate: function(finalClosureDate) {
+        const currentDate = new Date();
+    return currentDate < finalClosureDate;
     }
     
 
