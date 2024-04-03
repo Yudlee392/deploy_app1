@@ -1,0 +1,37 @@
+<h1 class="text-center mb-4">Manage Submissions {{facultyName}}</h1>
+<div class="row">
+    <div class="col-md-12">
+        <!-- Table for viewing all submissions -->
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Title</th>
+                        <th>Posted to (Magazine)</th>
+                        <th>Date submitted</th>
+                        <th>Final closer day of academic year </th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each submissions}}
+                    <tr>
+                        <td>{{this.title}}</td>
+                        <td>{{this.magazine.title}}</td>
+                        <td>{{formatDateForView this.dateSubmitted}}</td>
+                        <td>{{formatDateForView this.magazine.academicYear.finalClosureDate}}</td>
+                        <td>{{this.status}}</td>
+       <td>
+    {{#if (isBeforeFinalClosureDate this.magazine.academicYear.finalClosureDate)}}
+        <a href="#" class="btn btn-sm btn-primary mr-2">Edit</a>
+    {{/if}}
+    <!-- Add additional actions as needed -->
+</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
