@@ -1,0 +1,23 @@
+<h1>Create New Magazine</h1>
+    <form action="/manager/magazine/create" method="POST">
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title" required><br>
+
+        <label for="academicYear">Academic Year:</label><br>
+        <select id="academicYear" name="academicYear" required>
+            {{#each academicYears}}
+                <option value="{{this._id}}">{{this.name}}</option>
+            {{/each}}
+        </select><br>
+
+        <label for="faculty">Faculty:</label><br>
+        <select id="faculty" name="faculty" required>
+            {{#each faculties}}
+                <option value="{{this._id}}">{{this.name}}</option>
+            {{/each}}
+        </select><br>
+
+        <!-- Add more fields as needed -->
+
+        <button type="submit">Create Magazine</button>
+    </form>
