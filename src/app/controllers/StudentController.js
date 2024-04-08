@@ -18,7 +18,8 @@ class StudentController {
 
             // Render the submission form view with the fetched data
             res.render('submission/create', {
-                authen: true,
+                authen: 'student',
+                activePage: 'submission',
                 magazines: mutipleMongooseToObjects(magazines),
                 // Example authentication check
                 // Pass any data needed for rendering the form
@@ -97,7 +98,8 @@ class StudentController {
 
             console.log(submissions)
             res.render('submission/view', {
-                authen: true,
+                authen: 'student',
+                activePage: 'viewsubmission',
                 submissions: mutipleMongooseToObjects(submissions),
                 facultyName:faculty.name,
                 // Pass any other data needed for rendering the view

@@ -1,6 +1,48 @@
 <div class="container mt-4">
     <h1 class="text-center mb-4">Manage Magazines</h1>
-    <div class="row">
+    <div class="row mt-4">
+        <div class="col-md-6 offset-md-3">
+            <!-- Form for adding/editing magazines -->
+            <div class="card">
+                <div class="card-body" id="magazineForm" style="display: none;">
+                    <form id="magazineForm" action="/manager/magazine/create" method="POST">
+                        <h3 class="mb-3 text-center">Add Magazine</h3>
+                        <div class="form-group">
+                            <label for="title">Title:</label>
+                            <input type="text" class="form-control" id="title" name="title" maxlength="255" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="academicYear">Academic Year:</label>
+                            <select class="form-control" id="academicYear" name="academicYear" required>
+                                {{#each academicYears}}
+                                    <option value="{{this._id}}">{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="faculty">Faculty:</label>
+                            <select class="form-control" id="faculty" name="faculty" required>
+                                {{#each faculties}}
+                                    <option value="{{this._id}}">{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Create Magazine</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-body text-center">
+                    <button onclick="toggleAddMagazineForm()" class="btn btn-primary">Show/Hide Add Magazine Form</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
         <div class="col-md-12">
             <!-- Table for viewing all magazines -->
             <div class="table-responsive">
@@ -10,64 +52,30 @@
                             <th>Title</th>
                             <th>Academic Year</th>
                             <th>Faculty</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         {{#each magazines}}
-                        <tr>
-                            <td>{{this.title}}</td>
-                            <td>{{this.academicYear.name}}</td>
-                            <td>{{this.faculty.name}}</td>
-                            <td>
-                                <a href="./{{this._id}}/edit" class="btn btn-sm btn-primary mr-2">Edit</a>
-                                <form action="./{{this._id}}/delete" method="POST" style="display: inline;">
-                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>{{this.title}}</td>
+                                <td>{{this.academicYear.name}}</td>
+                                <td>{{this.faculty.name}}</td>
+                            </tr>
                         {{/each}}
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-   <div class="row mt-4">
-        <div class="col-md-12">
-            <!-- Form for adding/editing magazines -->
-            <div class="form-container">
-                <form id="magazineForm" action="/manager/magazine/create" method="POST">
-                    <h3 class="mb-3">Add Magazine</h3>
-                    <div class="form-group">
-                        <label for="title">Title:</label>
-                        <input type="text" class="form-control" id="title" name="title" maxlength="255" required>
-                    </div>
-    
-                    <div class="form-group">
-                        <label for="academicYear">Academic Year:</label>
-                        <select class="form-control" id="academicYear" name="academicYear" required>
-                            {{#each academicYears}}
-                                <option value="{{this._id}}">{{this.name}}</option>
-                            {{/each}}
-                        </select>
-                    </div>
-    
-                    <div class="form-group">
-                        <label for="faculty">Faculty:</label>
-                        <select class="form-control" id="faculty" name="faculty" required>
-                            {{#each faculties}}
-                                <option value="{{this._id}}">{{this.name}}</option>
-                            {{/each}}
-                        </select>
-                    </div>
-    
-                    <!-- Add more fields as needed -->
-    
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Create Magazine</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 </div>
+
+<script>
+    function toggleAddMagazineForm() {
+        var form = document.getElementById("magazineForm");
+        if (form.style.display === "none") {
+            form.style.display = "block";
+        } else {
+            form.style.display = "none";
+        }
+    }
+</script>
