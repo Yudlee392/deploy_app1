@@ -25,13 +25,13 @@ async function authMiddleware(req, res, next) {
         const role = user.roleId.name; // Assuming roleId contains the role name
         console.log(role)
         if (role === 'student') {
-            const userId=user._id.toString()
-        const facultyId=user.facultyId.toString()
+            const userId = user._id.toString()
+            const facultyId = user.facultyId.toString()
             // If the user is a student, prevent access to certain routes
             if (req.originalUrl.startsWith('/student')) {
                 req.role = role;
-                req.userId=userId
-                req.facultyId=facultyId
+                req.userId = userId
+                req.facultyId = facultyId
                 return next(); // Allow access
             } else {
                 return res.status(403).json({ message: "Access forbidden" });
@@ -46,9 +46,13 @@ async function authMiddleware(req, res, next) {
                 return res.status(403).json({ message: "Access forbidden" });
             }
         } else if (role === 'coordinator') {
+            const userId = user._id.toString()
+            const facultyId = user.facultyId.toString()
             // If the user is a coordinator, allow access to certain routes
             if (req.originalUrl.startsWith('/coordinator')) {
                 req.role = role;
+                req.userId = userId
+                req.facultyId = facultyId
                 return next(); // Allow access
             } else {
                 return res.status(403).json({ message: "Access forbidden" });
@@ -61,7 +65,7 @@ async function authMiddleware(req, res, next) {
             return next(); // Allow access
         }
 
-        
+
     } catch (err) {
         return res.status(403).json({ message: "Invalid token ", token: token, error: err });
     }

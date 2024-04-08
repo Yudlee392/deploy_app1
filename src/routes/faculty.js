@@ -1,14 +1,14 @@
 const express = require('express');
-const FacultyController = require("../app/controllers/FacultyController");
-const facultyRouter = express.Router();
+const facultyController = require("../app/controllers/FacultyController");
+const route = express.Router();
 
-facultyRouter.get('/faculty/create', FacultyController.createFacultyForm);
-facultyRouter.post('/faculty/create', FacultyController.createFaculty);
-facultyRouter.get('/faculty/view', FacultyController.viewFaculties);
-facultyRouter.post('/faculty/:id/delete', FacultyController.deleteFaculty);
+route.get('/faculty/create', facultyController.createFacultyForm);
+route.post('/faculty/create', facultyController.createFaculty);
+route.get('/faculty/view', facultyController.viewFaculties);
+route.post('/faculty/:id/delete', facultyController.deleteFaculty);
 
 
-facultyRouter.get('/faculty/:id/edit', FacultyController.editFaculty);
-facultyRouter.post('/faculty/:id/update', FacultyController.updateFaculty);
+route.get('/faculty/:id/edit', facultyController.editFaculty);
+route.post('/faculty/:id/update', facultyController.updateFaculty);
 
-module.exports = facultyRouter;
+module.exports = route;

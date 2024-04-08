@@ -7,18 +7,19 @@ const facultyRouter = require('./faculty');
 const accountRouter = require('./account');
 const studentRouter = require('./student');
 const managerRouter = require('./manager');
+const coordinator= require('./coordinator');
 
 function route(app) {
 
     app.use('/admin',authMiddleware, adminRouter);
     app.use('/admin',authMiddleware,facultyRouter);
     app.use('/admin',authMiddleware,accountRouter);
-    
 
-    //for student
     app.use('/student',authMiddleware,studentRouter);
 
     app.use('/manager',authMiddleware,managerRouter);
+
+    app.use('/coordinator', authMiddleware, coordinator);
 
     app.use('/login',loginRouter);
 
@@ -36,6 +37,6 @@ function route(app) {
             }
         });
     });
-    
+
 }
 module.exports = route;

@@ -5,7 +5,7 @@ dotenv.config();
 const GMAIL_USERNAME = process.env.GMAIL_USERNAME;
 const GMAIL_PASSWORD = process.env.GMAIL_PASSWORD;
 
-async function sendMail(req,email,facultyName,submissionId) {
+async function sendMail(req, email, facultyName, submissionId) {
     const protocol = req.protocol;
     const host = req.get('host');
     const baseUrl = `${protocol}://${host}`
@@ -15,7 +15,7 @@ async function sendMail(req,email,facultyName,submissionId) {
         subject: 'New Submitted Article Of Student',
         html: `<p>Hello Coordinator of ${facultyName},</p>
                <p>Please click the following link to review new submission:</p>
-               <p>${baseUrl}/coordinator/${submissionId}/edit</p>`
+               <p>${baseUrl}/coordinator/submission/${submissionId}/edit</p>`
     };
 
 

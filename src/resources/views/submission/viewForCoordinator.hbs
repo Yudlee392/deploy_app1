@@ -6,10 +6,11 @@
             <table class="table table-striped">
                 <thead class="thead-dark">
                     <tr>
+                        <th>Student's name</th>
                         <th>Title</th>
                         <th>Posted to (Magazine)</th>
                         <th>Date submitted</th>
-                        <th>Academic year </th>
+                        {{!-- <th>Academic year </th> --}}
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -17,12 +18,21 @@
                 <tbody>
                     {{#each submissions}}
                     <tr>
+                        <td>{{this.student.fullName}}</td>
+
                         <td>{{this.title}}</td>
                         <td>{{this.magazine.title}}</td>
                         <td>{{formatDateForView this.dateSubmitted}}</td>
-                        <td>{{this.magazine.academicYear.name}}({{formatDateForView
-                            this.magazine.academicYear.finalClosureDate}})</td>
+                        {{!-- <td>{{this.magazine.academicYear.name}}({{formatDateForView
+                            this.magazine.academicYear.finalClosureDate}})</td> --}}
                         <td>{{this.status}}</td>
+                        <th>
+                            <a href="./{{this._id}}/edit" class="btn btn-sm btn-primary mr-2">Edit</a>
+                            <form action="./{{this._id}}/delete" method="POST" style="display: inline;">
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </th>
+
                         <td>
                             {{#if (isBeforeFinalClosureDate this.magazine.academicYear.finalClosureDate)}}
                             <a href="#" class="btn btn-sm btn-primary mr-2">Edit</a>

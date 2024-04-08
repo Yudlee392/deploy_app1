@@ -10,9 +10,9 @@ const submissionSchema = new mongoose.Schema({
         default: 'Submitted'
     },
     imagePath:{type:String},
-    documentPath:{type:String}
+    documentPath:{type:String},
+    comment: { type: String, default: '' }
 
 });
 
-const Submission = mongoose.model('Submission', submissionSchema);
-module.exports = Submission;
+module.exports = mongoose.model('Submission', submissionSchema);
