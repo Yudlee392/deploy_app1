@@ -1,45 +1,11 @@
 <div class="container mt-4">
+   
     <h1 class="text-center mb-4">Manage Account</h1>
-    <div class="row">
-        <div class="col-md-12">
-            <!-- Table for viewing all accounts -->
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Full Name</th>
-                            <th>Role</th>
-                            <th>Faculty</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each users}}
-                        <tr>
-                            <td>{{this.userName}}</td>
-                            <td>{{this.email}}</td>
-                            <td>{{this.fullName}}</td>
-                            <td>{{this.roleId.name}}</td>
-                            <td>{{this.facultyId.name}}</td>
-                            <td>
-                                <a href="./{{this._id}}/edit" class="btn btn-sm btn-primary mr-2">Edit</a>
-                                <form action="./{{this._id}}/delete" method="POST" style="display: inline;">
-                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="row mt-4">
+    {{!--  --}}
+ <div class="row mt-4">
         <div class="col-md-6 offset-md-3">
             <div class="card">
-                <div class="card-body">
+                <div class="card-body"id="createAccountForm" style="display: none;">
                     <h3 class="text-center mb-4">Create Account</h3>
                     <form action="/admin/account/create" method="POST">
                         <div class="form-group">
@@ -85,7 +51,177 @@
                         </div>
                     </form>
                 </div>
+                <div class="card-body text-center">
+                    <button onclick="toggleCreateAccountForm()" class="btn btn-primary">Show/Hide Create Account Form</button>
+                </div>
             </div>
         </div>
     </div>
+
+    {{!--  --}}
+    <div class="row">
+        {{#if admins.length}}
+        <div class="col-md-12">
+            <!-- Table for viewing all admin accounts -->
+            <h2>Admins</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Full Name</th>
+                            {{!-- <th>Role</th>
+                            <th>Faculty</th> --}}
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each admins}}
+                        <tr>
+                            <td>{{this.userName}}</td>
+                            <td>{{this.email}}</td>
+                            <td>{{this.fullName}}</td>
+                            {{!-- <td>{{this.roleId.name}}</td>
+                            <td>{{this.facultyId.name}}</td> --}}
+                            <td>
+                                <a href="./{{this._id}}/edit" class="btn btn-sm btn-primary mr-2">Edit</a>
+                                <form action="./{{this._id}}/delete" method="POST" style="display: inline;">
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {{/if}}
+
+        <!-- Example for managers -->
+        {{#if managers.length}}
+        <div class="col-md-12">
+            <h2>Managers</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Full Name</th>
+                            {{!-- <th>Role</th>
+                            <th>Faculty</th> --}}
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each managers}}
+                        <tr>
+                            <td>{{this.userName}}</td>
+                            <td>{{this.email}}</td>
+                            <td>{{this.fullName}}</td>
+                            {{!-- <td>{{this.roleId.name}}</td>
+                            <td>{{this.facultyId.name}}</td> --}}
+                            <td>
+                                <a href="./{{this._id}}/edit" class="btn btn-sm btn-primary mr-2">Edit</a>
+                                <form action="./{{this._id}}/delete" method="POST" style="display: inline;">
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {{/if}}
+        
+        <!-- Example for students -->
+        {{#if students.length}}
+        <div class="col-md-12">
+            <h2>Students</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Full Name</th>
+                            {{!-- <th>Role</th> --}}
+                            <th>Faculty</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each students}}
+                        <tr>
+                            <td>{{this.userName}}</td>
+                            <td>{{this.email}}</td>
+                            <td>{{this.fullName}}</td>
+                            {{!-- <td>{{this.roleId.name}}</td> --}}
+                            <td>{{this.facultyId.name}}</td>
+                            <td>
+                                <a href="./{{this._id}}/edit" class="btn btn-sm btn-primary mr-2">Edit</a>
+                                <form action="./{{this._id}}/delete" method="POST" style="display: inline;">
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {{/if}}
+
+        <!-- Example for coordinators -->
+        {{#if coordinators.length}}
+        <div class="col-md-12">
+            <h2>Coordinators</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Full Name</th>
+                            {{!-- <th>Role</th> --}}
+                            <th>Faculty</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each coordinators}}
+                        <tr>
+                            <td>{{this.userName}}</td>
+                            <td>{{this.email}}</td>
+                            <td>{{this.fullName}}</td>
+                            {{!-- <td>{{this.roleId.name}}</td> --}}
+                            <td>{{this.facultyId.name}}</td>
+                            <td>
+                                <a href="./{{this._id}}/edit" class="btn btn-sm btn-primary mr-2">Edit</a>
+                                <form action="./{{this._id}}/delete" method="POST" style="display: inline;">
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {{/if}}
+        
+    </div>
 </div>
+
+<script>
+    function toggleCreateAccountForm() {
+        var form = document.getElementById("createAccountForm");
+        if (form.style.display === "none") {
+            form.style.display = "block";
+        } else {
+            form.style.display = "none";
+        }
+    }
+</script>

@@ -14,13 +14,12 @@ class StudentController {
         try {
 
             const faculty = req.facultyId;
-            const magazines = await Magazine.find({ faculty: faculty });
+            const magazines = await Magazine.find({ faculty: faculty }).populate('academicYear');
 
             // Render the submission form view with the fetched data
             res.render('submission/create', {
-                authen: 'student',
+                authen: true,
                 magazines: mutipleMongooseToObjects(magazines),
-                activePage: "submission"
                 // Example authentication check
                 // Pass any data needed for rendering the form
             });
@@ -98,10 +97,9 @@ class StudentController {
 
             console.log(submissions)
             res.render('submission/view', {
-                authen: 'student',
+                authen: true,
                 submissions: mutipleMongooseToObjects(submissions),
                 facultyName:faculty.name,
-                activePage: "viewsubmission"
                 // Pass any other data needed for rendering the view
             });
         } catch (error) {

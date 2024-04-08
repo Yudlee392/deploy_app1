@@ -37,7 +37,7 @@ class UserController {
             }
 
 
-            console.log(user.roleId.name);
+            // console.log(user.roleId.name);
             // Check user role (assuming roleId is populated)
             // if (user.roleId.name !== 'admin') {
             //     return res.status(403).json({ message: 'Insufficient permissions' });

@@ -36,10 +36,22 @@ class AccountController {
     async viewUsers(req, res, next) {
         try {
             const roles = await Role.find();
+            const roleAdmin= await Role.find({name:'admin'});
+            const admins=await User.find({roleId:roleAdmin[0]._id}).populate('roleId').populate('facultyId');;
+            const roleManagerr= await Role.find({name:'manager'});
+            const managers=await User.find({roleId:roleManagerr[0]._id}).populate('roleId').populate('facultyId');;
+            const roleStudent= await Role.find({name:'student'});
+            const students=await User.find({roleId:roleStudent[0]._id}).populate('roleId').populate('facultyId');;
+            const roleCoordinator= await Role.find({name:'coordinator'});
+            const coordinators=await User.find({roleId:roleCoordinator[0]._id}).populate('roleId').populate('facultyId');;
             const faculties = await Faculty.find();
             const users = await User.find({}).populate('roleId').populate('facultyId');
             res.render('account/view', {
                 users: mutipleMongooseToObjects(users),
+                admins: mutipleMongooseToObjects(admins),
+                managers: mutipleMongooseToObjects(managers),
+                students: mutipleMongooseToObjects(students),
+                coordinators: mutipleMongooseToObjects(coordinators),
                 authen: 'admin',
                 activePage: 'account',
                 roles: mutipleMongooseToObjects(roles),

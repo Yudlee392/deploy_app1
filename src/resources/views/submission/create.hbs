@@ -14,7 +14,7 @@
                     <select class="form-control" id="magazine" name="magazine" required>
                         <option value="">Select Magazine</option>
                         {{#each magazines}}
-                        <option value="{{this._id}}">{{this.title}}</option>
+                        <option value="{{this._id}}">{{this.title}} Deadline:{{formatDateForView this.academicYear.closureDate}}</option>
                         {{/each}}
                     </select>
                 </div>
