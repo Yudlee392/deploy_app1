@@ -3,6 +3,8 @@ const { mutipleMongooseToObjects, mongoseToObject } = require("../../util/mongoo
 const Magazine = require('../models/Magazine');
 const Submission = require('../models/Submission');
 const { getCachedViewLink } = require('../../config/firebase')
+const { sendMailToStudent } = require('../../config/mailNotification');
+
 class CoordinatorController {
     async viewAllSubmissionWithFacultyId(req, res, next) {
         try {
@@ -16,6 +18,7 @@ class CoordinatorController {
 
             res.render('submission/viewForCoordinator', {
                 facultyName: faculty.name,
+                authen: 'coordinator',
                 submissions: mutipleMongooseToObjects(submissions),
             });
         } catch (error) {
@@ -26,7 +29,7 @@ class CoordinatorController {
     async editSubmissionForm(req, res, next) {
         const facultyId = req.facultyId;
 
-        Submission.findById(req.params.id).populate('magazine')
+        Submission.findById(req.params.id).populate('magazine').populate('student')
             .then(async submission => {
                 const viewImageLink = await getCachedViewLink(submission.imagePath);
                 const viewDocLink = await getCachedViewLink(submission.documentPath);
@@ -36,6 +39,7 @@ class CoordinatorController {
                     submission: mongoseToObject(submission),
                     viewImageLink: viewImageLink,
                     viewDocLink: viewDocLink,
+                    authen: 'coordinator',
                 })
             }
             )
@@ -46,6 +50,9 @@ class CoordinatorController {
         try {
             const { status, comment } = req.body;
             await Submission.updateOne({ _id: req.params.id }, { status, comment });
+            const submission=await Submission.findOne({ _id: req.params.id }).populate('student')
+            sendMailToStudent(req,submission.student.email , submission.status, submission.comment, submission.title,submission.student.fullName) 
+
             res.redirect('../view');
         } catch (error) {
             next(error);

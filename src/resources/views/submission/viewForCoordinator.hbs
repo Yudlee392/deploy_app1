@@ -26,16 +26,11 @@
                         {{!-- <td>{{this.magazine.academicYear.name}}({{formatDateForView
                             this.magazine.academicYear.finalClosureDate}})</td> --}}
                         <td>{{this.status}}</td>
-                        <th>
-                            <a href="./{{this._id}}/edit" class="btn btn-sm btn-primary mr-2">Edit</a>
-                            <form action="./{{this._id}}/delete" method="POST" style="display: inline;">
-                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                            </form>
-                        </th>
+                      
 
                         <td>
-                            {{#if (isBeforeFinalClosureDate this.magazine.academicYear.finalClosureDate)}}
-                            <a href="#" class="btn btn-sm btn-primary mr-2">Edit</a>
+                            {{#if (notOlderThanEighteenDays this.dateSubmitted)}}
+                            <a href="./{{this._id}}/edit" class="btn btn-sm btn-primary mr-2">Edit</a>
                             {{/if}}
                             <!-- Add additional actions as needed -->
                         </td>

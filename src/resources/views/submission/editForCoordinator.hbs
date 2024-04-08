@@ -3,7 +3,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header bg-primary text-white">
-                    <h2 class="mb-0">Edit Submission</h2>
+                    <h2 class="mb-0">Edit Submission's Status</h2>
                 </div>
                 <div class="card-body">
                     <form action="/coordinator/submission/{{submission._id}}/edit" method="POST">
@@ -12,7 +12,11 @@
                             <span class="form-control">{{submission.title}}</span>
 
                         </div>
+                        <div class="form-group">
+                            <label for="title">Student Name:</label>
+                            <span class="form-control">{{submission.student.fullName}}</span>
 
+                        </div>
                         <div class="form-group">
                             <label>Image:</label>
                             <!-- Display image from imagePath -->
@@ -42,7 +46,7 @@
                             </select>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Update Submission</button>
+                        <button type="submit" class="btn btn-primary">Update Submission's Status</button>
                     </form>
                 </div>
             </div>

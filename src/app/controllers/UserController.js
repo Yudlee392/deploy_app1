@@ -54,7 +54,7 @@ class UserController {
             } else if (user.roleId.name === 'manager') {
                 res.redirect('/manager/magazine/view');
             }  else if (user.roleId.name === 'student') {
-                res.redirect('/student/submission/create');
+                res.redirect('/student/submission/view');
             }  
             else if (user.roleId.name === 'coordinator') {
                 res.redirect('/coordinator/submission/view');

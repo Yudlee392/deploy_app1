@@ -2,10 +2,10 @@ const { mutipleMongooseToObjects, mongoseToObject } = require("../../util/mongoo
 const Student = require("../models/User");
 const { upload, bucket, admin, getCachedViewLink } = require('../../config/firebase');
 const Submission = require("../models/Submission")
-const Magazine= require("../models/Magazine")
+const Magazine = require("../models/Magazine")
 const Faculty = require("../models/Faculty")
 const Role = require("../models/Role")
-const { sendMail } = require('../../config/mailNotification');
+const { sendMailToCoordinator } = require('../../config/mailNotification');
 const User = require("../models/User");
 
 class StudentController {
@@ -33,10 +33,10 @@ class StudentController {
     async submitFormData(req, res, next) {
         try {
             const user = req.userId;
-            const faculty=await Faculty.findOne({_id:req.facultyId})
+            const faculty = await Faculty.findOne({ _id: req.facultyId })
             // const faculty = req.facultyId;
             // const magazines = await Magazine.find({ faculty: faculty });
-            const {title,magazine}= req.body;
+            const { title, magazine } = req.body;
             const { image, document } = req.files;
             // Check if both files are uploaded
             if (!image || !document) {
@@ -65,19 +65,18 @@ class StudentController {
             // const viewLinkImage = await getCachedViewLink(imagePath);
             // const viewLinkDocument = await getCachedViewLink(documentPath);
 
-            const newSubmission = new Submission({ student: user, imagePath, documentPath,title,magazine});
+            const newSubmission = new Submission({ student: user, imagePath, documentPath, title, magazine });
             newSubmission.save();
-            const roleCoordinator=await Role.findOne({name:'coordinator'})
-            const roleCoordinatorId=roleCoordinator._id;
+            const roleCoordinator = await Role.findOne({ name: 'coordinator' })
+            const roleCoordinatorId = roleCoordinator._id;
 
-            const coordinators = await User.find({ roleId:roleCoordinatorId ,facultyId:faculty._id});
-            
-            // sendMail(req,coordinator.email,faculty.name,newSubmission._id)
+            const coordinators = await User.find({ roleId: roleCoordinatorId, facultyId: faculty._id });
+
             for (const coordinator of coordinators) {
-                await sendMail(req, coordinator.email, faculty.name, newSubmission._id);
+                await sendMailToCoordinator(req, coordinator.email, faculty.name, newSubmission._id);
             }
 
-            res.redirect ('./create');
+            res.redirect('./create');
 
 
         } catch (error) {
@@ -88,20 +87,20 @@ class StudentController {
 
     async getAllSubmissions(req, res, next) {
         try {
-            const faculty=await Faculty.findOne({_id:req.facultyId})
+            const faculty = await Faculty.findOne({ _id: req.facultyId })
             const user = req.userId;
             const submissions = await Submission.find({ student: user })
-            .populate({
-                path: 'magazine',
-                populate: [{ path: 'academicYear' }, { path: 'faculty' }]// Populate the academicYear field within the magazine
-            });
+                .populate({
+                    path: 'magazine',
+                    populate: [{ path: 'academicYear' }, { path: 'faculty' }]// Populate the academicYear field within the magazine
+                }).sort({ dateSubmitted: -1 });
 
             console.log(submissions)
             res.render('submission/view', {
                 authen: 'student',
                 activePage: 'viewsubmission',
                 submissions: mutipleMongooseToObjects(submissions),
-                facultyName:faculty.name,
+                facultyName: faculty.name,
                 // Pass any other data needed for rendering the view
             });
         } catch (error) {
@@ -109,6 +108,59 @@ class StudentController {
         }
     }
 
+    //[GET] /student/submission/:id/edit
+    async editSubmissionForm(req, res, next) {
+        const userId = req.userId;
+
+        Submission.findById(req.params.id).populate('magazine').populate('student')
+            .then(async submission => {
+                const viewImageLink = await getCachedViewLink(submission.imagePath);
+                const viewDocLink = await getCachedViewLink(submission.documentPath);
+                console.log("userId", userId, "submission.student", submission.student._id)
+                if (userId != submission.student._id) {
+                    return res.status(403).json({ message: "Access forbidden" });
+                }
+                res.render('submission/edit', {
+                    authen: 'student',
+                    submission: mongoseToObject(submission),
+                    viewImageLink: viewImageLink,
+                    viewDocLink: viewDocLink,
+                })
+            }
+            )
+            .catch(error => next(error));
+    }
+    //[POST] /student/submission/:id/edit
+    async editSubmission(req, res, next) {
+        const { title } = req.body;
+        const { image, document } = req.files;
+        const submission = await Submission.findById(req.params.id);
+
+        if (image) {
+            const imageFileName = Date.now() + image[0].originalname;
+            const imageFileRef = bucket.file(imageFileName);
+
+            await imageFileRef.save(image[0].buffer, {
+                metadata: { contentType: image[0].mimetype }
+            });
+            const imagePath = `${imageFileName}`;
+            submission.imagePath = imagePath;
+        }
+
+        if (document) {
+            const documentFileName = Date.now() + document[0].originalname;
+            const documentFileRef = bucket.file(documentFileName);
+
+            await documentFileRef.save(document[0].buffer, {
+                metadata: { contentType: document[0].mimetype }
+            });
+            submission.documentPath = documentPath;
+        }
+        submission.title = title;
+        submission.save();
+        res.redirect('../view');
+
+    }
 }
 
 module.exports = new StudentController();

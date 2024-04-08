@@ -2,9 +2,12 @@ const helpers = {
     eq: function (a, b) {
         return a === b;
     },
-    formatDateForView: (date) => {
-        return date.toLocaleDateString('vi-VN', { year: 'numeric', month: 'numeric', day: 'numeric'});
-    },
+    formatDateForView: (dateString) => {
+        const date = new Date(dateString);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;    },
     formatDateForEdit: function(dateString) {
         // Ensure dateString is provided and is a string
         // if (!dateString || typeof dateString !== 'string') {
@@ -40,6 +43,17 @@ const helpers = {
     isBeforeFinalClosureDate: function(finalClosureDate) {
         const currentDate = new Date();
     return currentDate < finalClosureDate;
+    },
+    notOlderThanEighteenDays: function(dateSubmitted){
+        const eighteenDaysAgo = new Date(Date.now() - (18 * 24 * 60 * 60 * 1000));
+
+        // Set time to midnight for both dates
+        const currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0);
+        const submittedDate = new Date(dateSubmitted);
+        submittedDate.setHours(0, 0, 0, 0);
+      
+        return submittedDate >= eighteenDaysAgo;
     }
     
 
