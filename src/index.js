@@ -3,7 +3,6 @@ var createError = require('http-errors');
 const sslRedirect = require('heroku-ssl-redirect').default;
 
 const express = require('express');
-const morgan = require('morgan');
 const exphbs = require('express-handlebars');
 const helpers = require('./handlebarsHelpers');
 //store token
