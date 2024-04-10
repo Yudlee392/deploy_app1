@@ -1,5 +1,6 @@
 const path = require('path');
 var createError = require('http-errors');
+const sslRedirect = require('heroku-ssl-redirect').default;
 
 const express = require('express');
 const morgan = require('morgan');
@@ -17,6 +18,7 @@ app.use(session({
     cookie:{maxAge: 300000}}))
     
 app.use(cookieParser());
+app.use(sslRedirect());
 
 const port = 3000;
 process.env.TZ = 'UTC';
